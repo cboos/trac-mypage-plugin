@@ -83,6 +83,9 @@ class MyPageModule(Component):
         'lp_link': (
             '$MYPAGE_LAST_PAGE_LINK', 
             N_("Link to most recent `MyPage` page")),
+        'lp_page': (
+            '$MYPAGE_LAST_PAGE_NAME',
+            N_("Name of the most recent `MyPage` page")),
         'lp_text': (
             '$MYPAGE_LAST_PAGE_TEXT', 
             N_("Wiki text of the most recent `MyPage` page")),
@@ -196,6 +199,7 @@ class MyPageModule(Component):
                 .replace(self.tokens['user'][0], req.authname) \
                 .replace(self.tokens['author'][0], author) \
                 .replace(self.tokens['lp_link'][0], last_page_link) \
+                .replace(self.tokens['lp_name'][0], last_page_name) \
                 .replace(self.tokens['lp_text'][0], last_page_text or '') \
                 .replace(self.tokens['lp_quoted'][0], last_page_quoted or '')
         req.redirect(req.href.wiki(today_page_name, action='edit', text=text))
