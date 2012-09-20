@@ -1,0 +1,9 @@
+*~
+.*.sw[op]
+.svn
+.hg
+build
+dist
+MyPage.egg-info
+*.pyc
+*.mo
