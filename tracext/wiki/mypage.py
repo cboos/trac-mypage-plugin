@@ -40,7 +40,7 @@ class MyPageModule(Component):
     For now, only authenticated users can use it, and they must have
     all the appropriate wiki permissions (`WIKI_VIEW` and `WIKI_CREATE`).
 
-    The `PageTemplates/MyPage` wiki page or the more specific 
+    The `PageTemplates/MyPage` wiki page or the more specific
     `PageTemplates/MyPage/<user>` page will be used to prefill
     the content of the //page of the day// when creating it
     using the ''MyPage'' main navigation entry.
@@ -55,7 +55,7 @@ class MyPageModule(Component):
     prefix = Option('mypage', 'prefix', '', doc="""
         Prefix to use for grouping ''MyPage'' pages. Those pages which
         will have a name of the form
-        `<prefix>/<user>/<date>`. 
+        `<prefix>/<user>/<date>`.
 
         The prefix defaults to empty, which means the MyPage pages
         will simply be rooted at toplevel and have a form of
@@ -67,30 +67,30 @@ class MyPageModule(Component):
 
     tokens = {
         'date': (
-            '$MYPAGE_DATE', 
+            '$MYPAGE_DATE',
             N_("The date of the day, formatted according "
                "to the user preferences")),
         'isodate': (
-            '$MYPAGE_ISODATE', 
+            '$MYPAGE_ISODATE',
             N_("The date of the day, formatted according ISO-8601 "
                "(i.e. YYYY-MM-DD)")),
         'user': (
-            '$MYPAGE_USER', 
+            '$MYPAGE_USER',
             N_("The author's user id")),
         'author': (
-            '$MYPAGE_AUTHOR', 
+            '$MYPAGE_AUTHOR',
             N_("The author's full name")),
         'lp_link': (
-            '$MYPAGE_LAST_PAGE_LINK', 
+            '$MYPAGE_LAST_PAGE_LINK',
             N_("Link to most recent `MyPage` page")),
-        'lp_page': (
+        'lp_name': (
             '$MYPAGE_LAST_PAGE_NAME',
             N_("Name of the most recent `MyPage` page")),
         'lp_text': (
-            '$MYPAGE_LAST_PAGE_TEXT', 
+            '$MYPAGE_LAST_PAGE_TEXT',
             N_("Wiki text of the most recent `MyPage` page")),
         'lp_quoted': (
-            '$MYPAGE_LAST_PAGE_QUOTED', 
+            '$MYPAGE_LAST_PAGE_QUOTED',
             N_("Wiki-quoted text of the most recent `MyPage` page")),
         }
 
@@ -121,15 +121,15 @@ class MyPageModule(Component):
               take over (see `prepare_request` in trac/web/chrome.py).
         """
         return req.authname and \
-            req.path_info.startswith('/wiki/' + 
+            req.path_info.startswith('/wiki/' +
                                      self.get_mypage_base(req.authname))
 
     def get_navigation_items(self, req):
         """Retrieve top-level ''MyPage'' entry.
         """
         yield 'mainnav', 'mypage', tag.a(_("MyPage"), href=req.href.mypage())
-        
-        
+
+
     # IRequestHandler methods
 
     def match_request(self, req):
@@ -162,7 +162,7 @@ class MyPageModule(Component):
             if ws.has_page(pagename):
                 page = WikiPage(self.env, pagename)
                 if 'WIKI_VIEW' in req.perm(page.resource):
-                    self.log.debug("get_page_text(%s) -> %s", 
+                    self.log.debug("get_page_text(%s) -> %s",
                                    pagename, page.text)
                     return page.text
             self.log.debug("get_page_text(%s) -> None", pagename)
@@ -179,7 +179,7 @@ class MyPageModule(Component):
             # retrieve previous "page of the day", if any
             all_mypages = self.get_all_mypages(base)
             last = bisect(all_mypages, today_page_name) - 1
-            self.log.debug("Pos of today %s in %r is %d", 
+            self.log.debug("Pos of today %s in %r is %d",
                            today_page_name, all_mypages, last)
             last_page_name = all_mypages[last] if last >= 0 else None
             last_page_link = ''
@@ -248,7 +248,7 @@ class MyPageNavMacro(WikiMacroBase):
         page itself, then this will take the page of the day for the
         reference point.
 
-        Note that bigger numbers can be used for the offsets, 
+        Note that bigger numbers can be used for the offsets,
         so one can create links like:
         `[[MyPageNav(-100000,At the beginning)]]` and
         `[[MyPageNav(+100000,At the end)]]`.
@@ -273,7 +273,7 @@ class MyPageNavMacro(WikiMacroBase):
         all_mypages = mp.get_all_mypages(base)
         r = formatter.resource
         if r.realm == 'wiki' and r.id.startswith(base):
-            mypage = r.id 
+            mypage = r.id
         else:
             tzinfo = getattr(formatter.context.req, 'tz', None)
             now = datetime.now(tzinfo or localtz)
@@ -284,15 +284,15 @@ class MyPageNavMacro(WikiMacroBase):
         # adjust to actual position if mypage exists
         if 0 <= idx - 1 < len(all_mypages) and all_mypages[idx -1] == mypage:
             idx -= 1
-        self.log.debug("Reference is %s, pos %d in %r", 
+        self.log.debug("Reference is %s, pos %d in %r",
                        mypage, idx, all_mypages)
         # Special cases: at the beginning or at the end, the
         # predecessors resp. successors are "missing"
         if idx >= len(all_mypages) - 1 and offset > 0:
-            return tag.a(label if label is not None else 
+            return tag.a(label if label is not None else
                          _("(at the end)"), class_='missing')
         elif idx < 1 and offset < 0:
-            return tag.a(label if label is not None else 
+            return tag.a(label if label is not None else
                          _("(at the beginning)"), class_='missing')
         idx += offset
         selected = all_mypages[max(0, min(idx, len(all_mypages) - 1))]

@@ -11,7 +11,7 @@ If that page doesn't exist already, it will be filled with the content
 of a PageTemplates, but with a twist: some tokens will be
 automatically replaced, in particular for giving you the possibility
 to include or refer to the previous page of the day...
- 
+
 The intended use is to have a quick but effective way to track the
 ongoing activities of the day in the form of free wiki markup, and to
 easily keep a continuity with the activity that occurred the days
