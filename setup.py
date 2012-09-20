@@ -32,21 +32,22 @@ try:
 
 except ImportError:
     pass
-    
+
 MyPagePlugin = 'http://trac-hacks.org/wiki/MyPagePlugin'
 
 setup(name='MyPage',
-      install_requires='Trac >=0.13dev',
-      description='Mercurial plugin for Trac multirepos branch',
-      keywords='trac scm plugin mercurial hg',
-      version='0.13.0.0',
+      install_requires='Trac >=1.0dev',
+      description='Trac plugin for editing personal journal wiki pages',
+      keywords='trac wiki plugin',
+      version='1.0.0.1',
       url=MyPagePlugin,
       license='GPL',
       author='Christian Boos',
       author_email='cboos@edgewall.org',
       long_description="""
-      This plugin for Trac 0.13 provides support for maintaining 
-      a personal journal in the form of wiki pages.
+      This plugin for Trac 1.0 provides support for quickly accessing
+      and editing a personal journal or TODO list in the form of wiki
+      pages.
 
       See %s for more details.
       """ % MyPagePlugin,

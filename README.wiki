@@ -1,0 +1,43 @@
+= TH:MyPagePlugin
+
+== Introduction
+
+Simple plugin designed to help you maintain a "journal" of your daily
+activities with wiki pages. The main idea is to have a main navigation
+link named //`MyPage`// which takes you to your "page of the day", in
+edit mode.
+
+If that page doesn't exist already, it will be filled with the content
+of a PageTemplates, but with a twist: some tokens will be
+automatically replaced, in particular for giving you the possibility
+to include or refer to the previous page of the day...
+ 
+The intended use is to have a quick but effective way to track the
+ongoing activities of the day in the form of free wiki markup, and to
+easily keep a continuity with the activity that occurred the days
+before.
+
+Works best with the TH:WikiExtrasPlugin and its WikiPhrases...
+
+== Detailed mode of operation
+
+When clicking on a //`MyPage`// top-level navigation link, one will
+return to the edit preview mode of the "page of the day", which is a
+normal wiki page of the form `/wiki/<userid>/<iso8601-date>`. If that
+page doesn't yet exist, it will be created, eventually using an
+appropriate page template (`PageTemplates/MyPage/<userid>` or
+`PageTemplates/MyPage` - see PageTemplates).
+
+(Technically, this is achieved by redirecting the `/mypage` URL to the
+actual page of the day with `?action=edit`)
+
+Moreover those templates can contain some special markup which will
+get replaced by dynamic content when inserted as the initial content
+of the page of the day. The macro `[[MyPageHelp]]` lists the available
+tokens: [[MyPageHelp]]
+
+This replacement will only happen when creating the //page of the
+day//. If one wants to create such pages as normal wiki pages, retro-
+or pro-actively, the page will start empty or using the normal
+PageTemplates filling mechanism, i.e. no expansion of these tokens
+will take place.
