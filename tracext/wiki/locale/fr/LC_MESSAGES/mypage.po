@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MyPage 1.0.0.0\n"
 "Report-Msgid-Bugs-To: cboos@edgewall.org\n"
-"POT-Creation-Date: 2012-01-04 22:57+0100\n"
+"POT-Creation-Date: 2012-10-11 18:44+0200\n"
 "PO-Revision-Date: 2012-01-04 13:39+0100\n"
 "Last-Translator: Christian Boos <cboos@edgewall.org>\n"
 "Language-Team: fr <trac-dev@googlegroups.com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 0.9.6\n"
+"Generated-By: Babel 0.9.6dev-r0\n"
 
 #: tracext/wiki/mypage.py:71
 msgid "The date of the day, formatted according to the user preferences"
@@ -36,38 +36,42 @@ msgstr "Le nom complet de l'utilisateur"
 
 #: tracext/wiki/mypage.py:85
 msgid "Link to most recent `MyPage` page"
-msgstr "Lien vers la page « `MaPage` » la plus récente"
+msgstr "Lien vers la page « MaPage » la plus récente"
 
 #: tracext/wiki/mypage.py:88
-msgid "Wiki text of the most recent `MyPage` page"
-msgstr "Texte wiki de la page « `MaPage` » la plus récente"
+msgid "Name of the most recent `MyPage` page"
+msgstr "Nom de la page « MaPage » la plus récente"
 
 #: tracext/wiki/mypage.py:91
-msgid "Wiki-quoted text of the most recent `MyPage` page"
-msgstr "Citation du text wiki de la page « `MaPage` » la plus récente"
+msgid "Wiki text of the most recent `MyPage` page"
+msgstr "Texte wiki de la page « MaPage » la plus récente"
 
-#: tracext/wiki/mypage.py:126
+#: tracext/wiki/mypage.py:94
+msgid "Wiki-quoted text of the most recent `MyPage` page"
+msgstr "Citation du text wiki de la page « MaPage » la plus récente"
+
+#: tracext/wiki/mypage.py:130
 msgid "MyPage"
 msgstr "MaPage"
 
-#: tracext/wiki/mypage.py:136
+#: tracext/wiki/mypage.py:140
 msgid ""
 "\n"
 "                    You need to be authenticated in order to use MyPage.\n"
 "                    "
-msgstr "Vous devez être identifié afin the pouvoir utiliser  « `MaPage` »"
+msgstr ""
+"\n"
+"Vous devez être identifié afin the pouvoir utiliser  « MaPage »"
 
-#: tracext/wiki/mypage.py:155
+#: tracext/wiki/mypage.py:159
 msgid "Can't create the page of the day."
 msgstr "Impossible de créer la page du jour."
 
-#: tracext/wiki/mypage.py:201
+#: tracext/wiki/mypage.py:211
 msgid "Display help for `PageTemplates/MyPage/` usage."
-msgstr ""
-"Affiche l'aide pour l'utilisation effective des patrons "
-"`PageTemplates/MyPage/`"
+msgstr "Affiche l'aide pour l'utilisation des patrons `PageTemplates/MyPage/`"
 
-#: tracext/wiki/mypage.py:208
+#: tracext/wiki/mypage.py:218
 msgid ""
 "\n"
 "                The following tokens can be used in the "
@@ -75,10 +79,11 @@ msgid ""
 "                or `PageTemplates/MyPage/<user>` wiki pages:\n"
 "                "
 msgstr ""
+"\n"
 "Les expressions suivantes peuvent être utilisées dans les pages wiki "
 "`PageTemplates/MyPage` ou `PageTemplates/MyPage/<user>` :"
 
-#: tracext/wiki/mypage.py:216
+#: tracext/wiki/mypage.py:226
 msgid ""
 "\n"
 "                Note that you can also use the `[[MyPageNav]]` wiki macro"
@@ -87,11 +92,13 @@ msgid ""
 "                `[[MyPageNav?]]` to get help on this macro).\n"
 "                "
 msgstr ""
+"\n"
 "Vous pouvez également utiliser la macro-commande `[[MyPageNav]]` pour\n"
-"créer des liens dynamiques vers d'autres pages de type « `MaPage` »\n"
+"créer des liens dynamiques vers d'autres pages de type « MaPage »\n"
 "(utilisez `[[MyPageNav?]]` pour obtenir de l'aide sur cette macro).\n"
+"                "
 
-#: tracext/wiki/mypage.py:226
+#: tracext/wiki/mypage.py:236
 msgid ""
 "\n"
 "        Link to another `MyPage` page, with the current one taken as\n"
@@ -108,39 +115,40 @@ msgid ""
 "        page itself, then this will take the page of the day for the\n"
 "        reference point.\n"
 "\n"
-"        Note that bigger numbers can be used for the offsets, \n"
+"        Note that bigger numbers can be used for the offsets,\n"
 "        so one can create links like:\n"
 "        `[[MyPageNav(-100000,At the beginning)]]` and\n"
 "        `[[MyPageNav(+100000,At the end)]]`.\n"
 "        "
 msgstr ""
-"Créé un lien vers une autre page de type « `MaPage` », en utilisant la "
-"page\n"
-"courante comme point de référence.\n"
+"\n"
+"Créé un lien vers une autre page de type « MaPage », en utilisant la page"
+" courante comme point de référence.\n"
 "\n"
 "Des paramètres peuvent être fournis, suivant la syntaxe suivante :\n"
-"//+-offset,]label`//.\n"
+"  //`+-offset,]label`//.\n"
 "\n"
 "L'`offset` est +0 par défaut, ce qui correspond à un lien vers la page "
-"courante. Une valeur de `+1` correspond à la page  de type « `MaPage` » "
+"courante. Une valeur de `+1` correspond à la page de type « MaPage » "
 "venant immédiatement après la page contenant la macro-commande. De même, "
-"`-1` correspond à la  page  de type « `MaPage` » venant immédiatement "
-"avant.\n"
+"`-1` correspond à la page de type « MaPage » venant immédiatement avant "
+"(chronologiquement).\n"
 "\n"
 "Si la macro est insérée dans une page qui n'est pas une page de type "
-"« `MaPage` », alors c'est la page du jour qui sera utilisée comme point "
-"de référence.\n"
+"« MaPage », alors c'est la page du jour qui sera utilisée comme point de "
+"référence.\n"
 "\n"
 "Notez que des valeurs arbitrairement grandes peuvent être utilisées en "
 "tant qu'`offset`, de façon à pouvoir créer des liens du type :\n"
-"`[[MyPageNav(-100000,At the beginning)]]` et\n"
-"`[[MyPageNav(+100000,At the end)]]`.\n"
+" `[[MyPageNav(-100000,Aller au début)]]` et\n"
+" `[[MyPageNav(+100000,Aller à la fin)]]`.\n"
+"        "
 
-#: tracext/wiki/mypage.py:280
+#: tracext/wiki/mypage.py:293
 msgid "(at the end)"
 msgstr "(à la fin)"
 
-#: tracext/wiki/mypage.py:283
+#: tracext/wiki/mypage.py:296
 msgid "(at the beginning)"
 msgstr "(au début)"
 
