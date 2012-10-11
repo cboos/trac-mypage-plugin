@@ -21,7 +21,7 @@ from genshi.builder import tag
 from trac.config import Option
 from trac.core import *
 from trac.util import get_reporter_id
-from trac.util.datefmt import format_date, localtz, user_time
+from trac.util.datefmt import format_date, localtz, parse_date, user_time
 from trac.util.translation import cleandoc_, domain_functions
 from trac.wiki.api import WikiSystem
 from trac.wiki.formatter import format_to_oneliner
@@ -281,22 +281,35 @@ class MyPageNavMacro(WikiMacroBase):
             mypage = '/'.join([base, today])
         selected = base
         idx = bisect(all_mypages, mypage)
+
         # adjust to actual position if mypage exists
         if 0 <= idx - 1 < len(all_mypages) and all_mypages[idx -1] == mypage:
             idx -= 1
         self.log.debug("Reference is %s, pos %d in %r",
                        mypage, idx, all_mypages)
+
         # Special cases: at the beginning or at the end, the
         # predecessors resp. successors are "missing"
+        missing = False
         if idx >= len(all_mypages) - 1 and offset > 0:
-            return tag.a(label if label is not None else
-                         _("(at the end)"), class_='missing')
+            missing, tooltip = True, _("(at the end)")
         elif idx < 1 and offset < 0:
-            return tag.a(label if label is not None else
-                         _("(at the beginning)"), class_='missing')
+            missing, tooltip = True, _("(at the beginning)")
+        if missing:
+            if not label:
+                label, tooltip = tooltip, None
+            return tag.a(label, title=tooltip, class_='missing')
+
+        # Link to the targeted `MyPage` page
         idx += offset
         selected = all_mypages[max(0, min(idx, len(all_mypages) - 1))]
         self.log.debug("With offset %d, going to %d (adjusted to %d)",
                        offset, idx, max(0, min(idx, len(all_mypages) - 1)))
-        return tag.a(label if label is not None else selected,
+        selected_day = selected.split('/')[-1]
+        try:
+            tooltip = _("MyPage for %(day)s",
+                        day=format_date(parse_date(selected_day)))
+        except TracError:
+            tooltip = _("non-day page '%(special)'", special=selected_day)
+        return tag.a(label if label is not None else selected, title=tooltip,
                      href=formatter.href.wiki(selected))
