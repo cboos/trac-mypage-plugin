@@ -237,7 +237,7 @@ class MyPageNavMacro(WikiMacroBase):
         Link to another `MyPage` page, with the current one taken as
         reference.
 
-        It can take parameters of the form //`+-offset,]label`//.
+        It can take parameters of the form //`[+-offset,]label`//.
 
         The `offset` is +0 by default, which means link to the current
         page. A value of `+1` means the ''MyPage'' coming immediately
