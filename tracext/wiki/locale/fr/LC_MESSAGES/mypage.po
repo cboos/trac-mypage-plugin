@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MyPage 1.0.0.0\n"
 "Report-Msgid-Bugs-To: cboos@edgewall.org\n"
-"POT-Creation-Date: 2012-10-11 18:44+0200\n"
+"POT-Creation-Date: 2012-10-11 19:41+0200\n"
 "PO-Revision-Date: 2012-01-04 13:39+0100\n"
 "Last-Translator: Christian Boos <cboos@edgewall.org>\n"
 "Language-Team: fr <trac-dev@googlegroups.com>\n"
@@ -104,7 +104,7 @@ msgid ""
 "        Link to another `MyPage` page, with the current one taken as\n"
 "        reference.\n"
 "\n"
-"        It can take parameters of the form //`+-offset,]label`//.\n"
+"        It can take parameters of the form //`[+-offset,]label`//.\n"
 "\n"
 "        The `offset` is +0 by default, which means link to the current\n"
 "        page. A value of `+1` means the ''MyPage'' coming immediately\n"
@@ -126,7 +126,7 @@ msgstr ""
 " courante comme point de référence.\n"
 "\n"
 "Des paramètres peuvent être fournis, suivant la syntaxe suivante :\n"
-"  //`+-offset,]label`//.\n"
+"  //`[+-offset,]label`//.\n"
 "\n"
 "L'`offset` est +0 par défaut, ce qui correspond à un lien vers la page "
 "courante. Une valeur de `+1` correspond à la page de type « MaPage » "
@@ -144,11 +144,20 @@ msgstr ""
 " `[[MyPageNav(+100000,Aller à la fin)]]`.\n"
 "        "
 
-#: tracext/wiki/mypage.py:293
+#: tracext/wiki/mypage.py:295
 msgid "(at the end)"
 msgstr "(à la fin)"
 
-#: tracext/wiki/mypage.py:296
+#: tracext/wiki/mypage.py:297
 msgid "(at the beginning)"
 msgstr "(au début)"
+
+#: tracext/wiki/mypage.py:311
+#, python-format
+msgid "MyPage for %(day)s"
+msgstr "« MaPage » pour le %(day)s"
+
+#: tracext/wiki/mypage.py:313
+msgid "non-day page '%(special)'"
+msgstr "« MaPage » spéciale : %(special)"
 
