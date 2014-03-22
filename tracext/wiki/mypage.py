@@ -20,6 +20,7 @@ from genshi.builder import tag
 
 from trac.config import Option
 from trac.core import *
+from trac.resource import ResourceNotFound
 from trac.util import get_reporter_id
 from trac.util.datefmt import format_date, localtz, parse_date, user_time
 from trac.util.translation import cleandoc_, domain_functions
