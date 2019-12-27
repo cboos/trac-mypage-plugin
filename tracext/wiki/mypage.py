@@ -31,6 +31,8 @@ from trac.wiki.macros import WikiMacroBase
 from trac.web.api import IRequestHandler
 from trac.web.chrome import INavigationContributor
 
+import re
+
 _, N_, add_domain, gettext = \
     domain_functions('mypage', ('_', 'N_', 'add_domain', 'gettext'))
 
@@ -111,7 +113,10 @@ class MyPageModule(Component):
 
         (where `base` is usually as given by `get_mypage_base`)
         """
-        return sorted(WikiSystem(self.env).get_pages(base))
+        compiled = re.compile(".*/\d{4}-\d{2}-\d{2}")
+        pages = list(WikiSystem(self.env).get_pages(base))
+        datepages = [date for date in pages if not compiled.match(date) is None]
+        return sorted(datepages)
 
     # INavigationContributor
 
