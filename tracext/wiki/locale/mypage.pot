@@ -129,6 +129,6 @@ msgid "MyPage for %(day)s"
 msgstr ""
 
 #: tracext/wiki/mypage.py:313
-msgid "non-day page '%(special)'"
+msgid "non-day page '%(special)s'"
 msgstr ""
 
