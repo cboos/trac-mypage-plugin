@@ -311,6 +311,6 @@ class MyPageNavMacro(WikiMacroBase):
             tooltip = _("MyPage for %(day)s",
                         day=format_date(parse_date(selected_day)))
         except TracError:
-            tooltip = _("non-day page '%(special)'", special=selected_day)
+            tooltip = _("non-day page '%(special)s'", special=selected_day)
         return tag.a(label if label is not None else selected, title=tooltip,
                      href=formatter.href.wiki(selected))
