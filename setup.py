@@ -55,7 +55,7 @@ setup(name='MyPage',
       packages=['tracext', 'tracext.wiki'],
       package_data={
           '': ['COPYING', 'README'],
-          'tracext.hg': ['locale/*.*', 'locale/*/LC_MESSAGES/*.*'],
+          'tracext.wiki': ['locale/*.*', 'locale/*/LC_MESSAGES/*.*'],
           },
       entry_points={'trac.plugins': 'mypage = tracext.wiki.mypage'},
       **extra)
