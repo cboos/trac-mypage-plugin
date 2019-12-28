@@ -272,11 +272,11 @@ class MyPageNavMacro(WikiMacroBase):
         mp = MyPageModule(self.env)
         base = mp.get_mypage_base(formatter.perm.username)
         all_mypages = mp.get_all_mypages(base)
+        tzinfo = getattr(formatter.context.req, 'tz', None)
         r = formatter.resource
         if r.realm == 'wiki' and r.id.startswith(base):
             mypage = r.id
         else:
-            tzinfo = getattr(formatter.context.req, 'tz', None)
             now = datetime.now(tzinfo or localtz)
             today = format_date(now, 'iso8601', tzinfo)
             mypage = '/'.join([base, today])
@@ -309,7 +309,7 @@ class MyPageNavMacro(WikiMacroBase):
         selected_day = selected.split('/')[-1]
         try:
             tooltip = _("MyPage for %(day)s",
-                        day=format_date(parse_date(selected_day)))
+                        day=format_date(parse_date(selected_day), 'iso8601', tzinfo))
         except TracError:
             tooltip = _("non-day page '%(special)s'", special=selected_day)
         return tag.a(label if label is not None else selected, title=tooltip,
