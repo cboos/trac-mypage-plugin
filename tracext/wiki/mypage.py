@@ -128,7 +128,8 @@ class MyPageModule(Component):
     def get_navigation_items(self, req):
         """Retrieve top-level ''MyPage'' entry.
         """
-        yield 'mainnav', 'mypage', tag.a(_("MyPage"), href=req.href.mypage())
+        if 'WIKI_VIEW' in req.perm:
+            yield 'mainnav', 'mypage', tag.a(_("MyPage"), href=req.href.mypage())
 
 
     # IRequestHandler methods
