@@ -16,7 +16,7 @@ from bisect import bisect
 from datetime import datetime
 import pkg_resources
 
-from genshi.builder import tag
+from trac.util.html import tag
 
 from trac.config import Option
 from trac.core import *
