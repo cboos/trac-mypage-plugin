@@ -192,7 +192,7 @@ class MyPageModule(Component):
                         ['> ' + line for line in last_page_text.splitlines()])
 
             today_user = user_time(req, format_date, now, tzinfo=tzinfo)
-            author = get_reporter_id(req)
+            author = req.session.get('name') or get_reporter_id(req)
 
             text = template_text \
                 .replace(self.tokens['date'][0], today_user) \
