@@ -28,7 +28,7 @@ from trac.wiki.api import WikiSystem
 from trac.wiki.formatter import format_to_oneliner
 from trac.wiki.model import WikiPage
 from trac.wiki.macros import WikiMacroBase
-from trac.web.api import IRequestHandler
+from trac.web.api import IRequestHandler, IRequestFilter
 from trac.web.chrome import INavigationContributor
 
 import re
@@ -124,11 +124,10 @@ class MyPageModule(Component):
         """Check whether the current request belongs to MyPage.
 
         Note: actually this won't work... the wiki module will always
-              take over (see `prepare_request` in trac/web/chrome.py).
+              take over, because only the get_active_navigation_item of the 
+              used handler (which is the WikiModule) will be called.
         """
-        return req.authname and \
-            req.path_info.startswith('/wiki/' +
-                                     self.get_mypage_base(req.authname))
+        return 'mypage'
 
     def get_navigation_items(self, req):
         """Retrieve top-level ''MyPage'' entry.
@@ -211,6 +210,57 @@ class MyPageModule(Component):
         req.redirect(req.href.wiki(today_page_name, action='edit', text=text))
         # Hm, wish this could force a POST...
 
+
+class MyPageMainNavActivator(Component):
+    _domain = 'mypage'
+    _description = cleandoc_("Arranges activation of the MyPage button in the `mainnav` menu.")
+
+    implements(IRequestFilter)
+
+    def __init__(self):
+        self._mp = MyPageModule(self.env)
+
+    # IRequestFilter
+
+    def pre_process_request(self, req, handler):
+        return handler
+
+    def post_process_request(self, req, template, data, metadata):
+        def parseable_date(date):
+            """Determines if the passed date can be parsed and converted
+            to a valid date
+            """
+            parseable = True
+            try:
+                day = parse_date(date)
+            except TracError:
+                parseable = False
+            return parseable
+
+        if data:
+            page = data.get('page')
+            if page and req and self._mp:
+                # We want to be very safe, to prevent problems
+                # Because the IRequestFilter is called for every Trac Request
+                # That is also why we check the objects early
+                # and delay the heavier operations
+                try:
+                    pagename = page.name
+                    if pagename and req.chrome and req.chrome.get('nav'):
+                        base = self._mp.get_mypage_base(req.authname)
+                        if pagename.startswith(base) and parseable_date(pagename.split('/')[-1]):
+                            # Find the 'mainnav' entry in the dictionary
+                            # Which is an array of dictionaries
+                            # Find the dictionary in that array that contaions the 'name': 'mypage' key
+                            # In that dictionary set the 'active' key to True
+                            mainnav = req.chrome['nav'].get('mainnav')
+                            for dict in mainnav or []:
+                                if dict.get('name') == 'mypage':
+                                    dict['active'] = True
+                except:
+                    pass
+
+        return (template, data, metadata)
 
 class MyPageHelpMacro(WikiMacroBase):
     _domain = 'mypage'
