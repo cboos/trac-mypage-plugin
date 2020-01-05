@@ -111,7 +111,20 @@ class MyPageModule(Component):
 
         (where `base` is usually as given by `get_mypage_base`)
         """
-        return sorted(WikiSystem(self.env).get_pages(base))
+        def parseable_date(date):
+            """Determines if the passed date can be parsed and converted
+            to a valid date
+            """
+            parseable = True
+            try:
+                day = parse_date(date)
+            except TracError:
+                parseable = False
+            return parseable
+
+        pages = list(WikiSystem(self.env).get_pages(base))
+        datepages = [pagepath for pagepath in pages if parseable_date(pagepath.split('/')[-1])]
+        return sorted(datepages)
 
     # INavigationContributor
 
