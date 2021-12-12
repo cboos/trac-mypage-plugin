@@ -111,7 +111,20 @@ class MyPageModule(Component):
 
         (where `base` is usually as given by `get_mypage_base`)
         """
-        return sorted(WikiSystem(self.env).get_pages(base))
+        def parseable_date(date):
+            """Determines if the passed date can be parsed and converted
+            to a valid date
+            """
+            parseable = True
+            try:
+                day = parse_date(date)
+            except TracError:
+                parseable = False
+            return parseable
+
+        pages = list(WikiSystem(self.env).get_pages(base))
+        datepages = [pagepath for pagepath in pages if parseable_date(pagepath.split('/')[-1])]
+        return sorted(datepages)
 
     # INavigationContributor
 
@@ -127,7 +140,8 @@ class MyPageModule(Component):
     def get_navigation_items(self, req):
         """Retrieve top-level ''MyPage'' entry.
         """
-        yield 'mainnav', 'mypage', tag.a(_("MyPage"), href=req.href.mypage())
+        if 'WIKI_VIEW' in req.perm:
+            yield 'mainnav', 'mypage', tag.a(_("MyPage"), href=req.href.mypage())
 
 
     # IRequestHandler methods
@@ -191,7 +205,7 @@ class MyPageModule(Component):
                         ['> ' + line for line in last_page_text.splitlines()])
 
             today_user = user_time(req, format_date, now, tzinfo=tzinfo)
-            author = get_reporter_id(req)
+            author = req.session.get('name') or get_reporter_id(req)
 
             text = template_text \
                 .replace(self.tokens['date'][0], today_user) \
